@@ -1,8 +1,11 @@
+import os
+from dotenv import load_dotenv
 from decimal import Decimal
 import sqlobject as SO # type: ignore
 import requests # type: ignore
+load_dotenv()
 
-database = 'mysql://root:root@localhost/login'
+database = os.getenv("DATABASE_URL")
 __connection__ = SO.connectionForURI(database)
 
 class User(SO.SQLObject):
@@ -100,7 +103,7 @@ def get_conversion_rate(base: str, target: str) -> Decimal | None:
         response = requests.get(
             "https://api.currencyfreaks.com/latest",
             params={
-                "apikey": "LA_APIKEY_ACA", 
+                "apikey": os.getenv("API_KEY"), 
                 "symbols": f"{base},{target}"
             }
         )
