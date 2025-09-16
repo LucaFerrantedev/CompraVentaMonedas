@@ -1,5 +1,5 @@
 import os
-from dotenv import load_dotenv
+from dotenv import load_dotenv # type: ignore
 from decimal import Decimal
 import sqlobject as SO # type: ignore
 import requests # type: ignore
