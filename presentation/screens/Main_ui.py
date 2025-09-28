@@ -12,17 +12,132 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 600)
+        MainWindow.resize(641, 442)
         self.centralwidget = QtWidgets.QWidget(parent=MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+        self.comboBox = QtWidgets.QComboBox(parent=self.centralwidget)
+        self.comboBox.setGeometry(QtCore.QRect(70, 170, 111, 31))
+        self.comboBox.setStyleSheet("                                    QComboBox {\n"
+"                                        background-color: #252526;\n"
+"                                        border: 1px solid #3c3c3c;\n"
+"                                        border-radius: 6px;\n"
+"                                        padding: 2px;\n"
+"                                        color: #d4d4d4;\n"
+"                                        font-size: 14px;\n"
+"                                    }")
+        self.comboBox.setObjectName("comboBox")
+        self.lblMoneda = QtWidgets.QLabel(parent=self.centralwidget)
+        self.lblMoneda.setGeometry(QtCore.QRect(70, 150, 49, 16))
+        self.lblMoneda.setObjectName("lblMoneda")
+        self.lineEdit = QtWidgets.QLineEdit(parent=self.centralwidget)
+        self.lineEdit.setGeometry(QtCore.QRect(70, 230, 111, 31))
+        self.lineEdit.setStyleSheet("                                    QLineEdit {\n"
+"                                        background-color: #252526;\n"
+"                                        border: 1px solid #3c3c3c;\n"
+"                                        border-radius: 6px;\n"
+"                                        padding: 2px;\n"
+"                                        color: #d4d4d4;\n"
+"                                        font-size: 14px;\n"
+"                                    }\n"
+"                                    QLineEdit:focus {\n"
+"                                        border: 1px solid #007acc;\n"
+"                                    }")
+        self.lineEdit.setObjectName("lineEdit")
+        self.label = QtWidgets.QLabel(parent=self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(70, 210, 49, 16))
+        self.label.setObjectName("label")
+        self.listView = QtWidgets.QListView(parent=self.centralwidget)
+        self.listView.setGeometry(QtCore.QRect(350, 71, 256, 281))
+        self.listView.setObjectName("listView")
+        self.widget = QtWidgets.QWidget(parent=self.centralwidget)
+        self.widget.setGeometry(QtCore.QRect(220, 130, 107, 148))
+        self.widget.setObjectName("widget")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.widget)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.pushButton = QtWidgets.QPushButton(parent=self.widget)
+        self.pushButton.setStyleSheet("QPushButton {\n"
+"    background-color: #1976D2;\n"
+"    color: white;\n"
+"    border-radius: 8px;\n"
+"    padding: 8px 16px;\n"
+"    font-weight: bold;\n"
+"    border: none;\n"
+"}\n"
+"QPushButton:hover {\n"
+"    background-color: #1565C0;\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: #0D47A1;\n"
+"}")
+        self.pushButton.setObjectName("pushButton")
+        self.verticalLayout.addWidget(self.pushButton)
+        self.btnCrearCuenta = QtWidgets.QPushButton(parent=self.widget)
+        self.btnCrearCuenta.setStyleSheet("QPushButton {\n"
+"    background-color: #19D2B0;\n"
+"    color: white;\n"
+"    border-radius: 8px;\n"
+"    padding: 8px 16px;\n"
+"    font-weight: bold;\n"
+"    border: none;\n"
+"}\n"
+"QPushButton:hover {\n"
+"    background-color: #7AE6D0;\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: #31917F;\n"
+"}")
+        self.btnCrearCuenta.setObjectName("btnCrearCuenta")
+        self.verticalLayout.addWidget(self.btnCrearCuenta)
+        self.btnComprar = QtWidgets.QPushButton(parent=self.widget)
+        self.btnComprar.setStyleSheet("QPushButton {\n"
+"    background-color: #19D257;\n"
+"    color: white;\n"
+"    border-radius: 8px;\n"
+"    padding: 8px 16px;\n"
+"    font-weight: bold;\n"
+"    border: none;\n"
+"}\n"
+"QPushButton:hover {\n"
+"    background-color: #5DDE89;\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: #41965D;\n"
+"}")
+        self.btnComprar.setObjectName("btnComprar")
+        self.verticalLayout.addWidget(self.btnComprar)
+        self.btnVender = QtWidgets.QPushButton(parent=self.widget)
+        self.btnVender.setStyleSheet("QPushButton {\n"
+"    background-color: #D2BC19;\n"
+"    color: white;\n"
+"    border-radius: 8px;\n"
+"    padding: 8px 16px;\n"
+"    font-weight: bold;\n"
+"    border: none;\n"
+"}\n"
+"QPushButton:hover {\n"
+"    background-color: #D6C660;\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: #8A7E41;\n"
+"}")
+        self.btnVender.setObjectName("btnVender")
+        self.verticalLayout.addWidget(self.btnVender)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(parent=MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 641, 22))
         self.menubar.setObjectName("menubar")
+        self.menuCuenta = QtWidgets.QMenu(parent=self.menubar)
+        self.menuCuenta.setObjectName("menuCuenta")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(parent=MainWindow)
+        self.statusbar.setToolTip("")
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+        self.actionCerrar_sesion = QtGui.QAction(parent=MainWindow)
+        self.actionCerrar_sesion.setObjectName("actionCerrar_sesion")
+        self.menuCuenta.addAction(self.actionCerrar_sesion)
+        self.menubar.addAction(self.menuCuenta.menuAction())
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -30,3 +145,11 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.lblMoneda.setText(_translate("MainWindow", "Moneda"))
+        self.label.setText(_translate("MainWindow", "Cantidad"))
+        self.pushButton.setText(_translate("MainWindow", "Ingresar ARS"))
+        self.btnCrearCuenta.setText(_translate("MainWindow", "Crear Cuenta"))
+        self.btnComprar.setText(_translate("MainWindow", "Comprar"))
+        self.btnVender.setText(_translate("MainWindow", "Vender"))
+        self.menuCuenta.setTitle(_translate("MainWindow", "Cuenta"))
+        self.actionCerrar_sesion.setText(_translate("MainWindow", "Cerrar sesion"))

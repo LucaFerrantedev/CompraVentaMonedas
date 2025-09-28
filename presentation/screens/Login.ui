@@ -115,7 +115,7 @@
                                         border-radius: 6px;
                                         padding: 2px;
                                         color: #d4d4d4;
-                                        font-size: 12px;
+                                        font-size: 14px;
                                     }
                                     QLineEdit:focus {
                                         border: 1px solid #007acc;
@@ -138,7 +138,7 @@
                                         border-radius: 6px;
                                         padding: 2px;
                                         color: #d4d4d4;
-                                        font-size: 12px;
+                                        font-size: 14px;
                                     }
                                     QLineEdit:focus {
                                         border: 1px solid #007acc;
