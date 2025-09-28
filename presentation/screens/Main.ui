@@ -6,25 +6,225 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>641</width>
+    <height>442</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QComboBox" name="comboBox">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>170</y>
+      <width>111</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">                                    QComboBox {
+                                        background-color: #252526;
+                                        border: 1px solid #3c3c3c;
+                                        border-radius: 6px;
+                                        padding: 2px;
+                                        color: #d4d4d4;
+                                        font-size: 14px;
+                                    }</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblMoneda">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>150</y>
+      <width>49</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Moneda</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>230</y>
+      <width>111</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">                                    QLineEdit {
+                                        background-color: #252526;
+                                        border: 1px solid #3c3c3c;
+                                        border-radius: 6px;
+                                        padding: 2px;
+                                        color: #d4d4d4;
+                                        font-size: 14px;
+                                    }
+                                    QLineEdit:focus {
+                                        border: 1px solid #007acc;
+                                    }</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>210</y>
+      <width>49</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Cantidad</string>
+    </property>
+   </widget>
+   <widget class="QListView" name="listView">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>71</y>
+      <width>256</width>
+      <height>281</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>130</y>
+      <width>107</width>
+      <height>148</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1976D2;
+    color: white;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-weight: bold;
+    border: none;
+}
+QPushButton:hover {
+    background-color: #1565C0;
+}
+QPushButton:pressed {
+    background-color: #0D47A1;
+}</string>
+       </property>
+       <property name="text">
+        <string>Ingresar ARS</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnCrearCuenta">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #19D2B0;
+    color: white;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-weight: bold;
+    border: none;
+}
+QPushButton:hover {
+    background-color: #7AE6D0;
+}
+QPushButton:pressed {
+    background-color: #31917F;
+}</string>
+       </property>
+       <property name="text">
+        <string>Crear Cuenta</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnComprar">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #19D257;
+    color: white;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-weight: bold;
+    border: none;
+}
+QPushButton:hover {
+    background-color: #5DDE89;
+}
+QPushButton:pressed {
+    background-color: #41965D;
+}</string>
+       </property>
+       <property name="text">
+        <string>Comprar</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnVender">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #D2BC19;
+    color: white;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-weight: bold;
+    border: none;
+}
+QPushButton:hover {
+    background-color: #D6C660;
+}
+QPushButton:pressed {
+    background-color: #8A7E41;
+}</string>
+       </property>
+       <property name="text">
+        <string>Vender</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>641</width>
      <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuCuenta">
+    <property name="title">
+     <string>Cuenta</string>
+    </property>
+    <addaction name="actionCerrar_sesion"/>
+   </widget>
+   <addaction name="menuCuenta"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="toolTip">
+    <string/>
+   </property>
+  </widget>
+  <action name="actionCerrar_sesion">
+   <property name="text">
+    <string>Cerrar sesion</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

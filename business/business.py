@@ -30,6 +30,7 @@ def registrar_usuario(username, password, password2):
 # Iniciar sesión con un usuario
 def iniciar_sesion(username, password):
     usuarios = cargar_users()
+    username = username.lower()
     # Verifica si el usuario existe
     for user in usuarios:
         if user['username'] == username:

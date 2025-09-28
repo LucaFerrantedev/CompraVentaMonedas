@@ -8,14 +8,17 @@ from presentation.screens.Main_ui import Ui_MainWindow
 from presentation.screens.dialogRegister_ui import Ui_dialogRegister
 from PyQt6.QtGui import QKeySequence
 
+# Ventana de login (primera ventana que se muestra)
 class LoginWindow(QMainWindow, Ui_LoginWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.lineditPass.setEchoMode(QLineEdit.EchoMode.Password)  # ← Oculta con asteriscos
         self.btnRegister.clicked.connect(self.btnRegisterClick)
         self.btnLogin.clicked.connect(self.btnLoginClick)
         self.show()
 
+    # Lógica del botón Registrar
     def btnRegisterClick(self):
         self.dialogo = dialogRegister()
         res = self.dialogo.exec()
@@ -55,9 +58,11 @@ class LoginWindow(QMainWindow, Ui_LoginWindow):
         else:
             print(QMessageBox.critical(self, "Informacion", "Registro cancelado."))
     
+    # Lógica del botón Iniciar Sesión
     def btnLoginClick(self):
         username = self.lineditUser.text()
         password = self.lineditPass.text()
+        
         exito, motivo = iniciar_sesion(username, password)
         try:
             if not usuario_invalido(username):
@@ -83,7 +88,10 @@ class dialogRegister(QDialog, Ui_dialogRegister):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.lineditPass.setEchoMode(QLineEdit.EchoMode.Password)         # ← Oculta con asteriscos
+        self.lineditPassConfirm.setEchoMode(QLineEdit.EchoMode.Password)  # ← Oculta con asteriscos
 
+# Ventana principal (se accede si se logra iniciar sesión)
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
