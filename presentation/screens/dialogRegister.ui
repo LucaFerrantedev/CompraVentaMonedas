@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>dialogRegister</class>
+ <widget class="QDialog" name="dialogRegister">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">dialogRegister {
+	background-color: #1e1e1e;
+}</string>
+  </property>
+  <widget class="QDialogButtonBox" name="btnOkCancelar">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>250</y>
+     <width>341</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QDialogButtonBox {
+                                        background-color: #0e639c;
+                                        border: none;
+                                        border-radius: 6px;
+                                        color: white;
+                                        font-size: 14px;
+                                        padding: 10px;
+                                        font-weight: bold;
+                                    }
+                                    QPushButton:hover {
+                                        background-color: #1177bb;
+                                    }
+                                    QPushButton:pressed {
+                                        background-color: #094771;
+                                    }</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineditUser">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>57</y>
+     <width>141</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">                                    QLineEdit {
+                                        background-color: #252526;
+                                        border: 1px solid #3c3c3c;
+                                        border-radius: 6px;
+                                        padding: 2px;
+                                        color: #d4d4d4;
+                                        font-size: 12px;
+                                    }
+                                    QLineEdit:focus {
+                                        border: 1px solid #007acc;
+                                    }</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lblPass">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>93</y>
+     <width>78</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Open Sans</family>
+     <pointsize>-1</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+                                        background-color: #1e1e1e;
+                                        border: 0px;
+                                        color: #d4d4d4;
+                                        font-size: 14px;        
+                                    }</string>
+   </property>
+   <property name="text">
+    <string>Contraseña</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineditPass">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>90</y>
+     <width>141</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">                                    QLineEdit {
+                                        background-color: #252526;
+                                        border: 1px solid #3c3c3c;
+                                        border-radius: 6px;
+                                        padding: 2px;
+                                        color: #d4d4d4;
+                                        font-size: 12px;
+                                    }
+                                    QLineEdit:focus {
+                                        border: 1px solid #007acc;
+                                    }</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lblUser">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>105</x>
+     <y>60</y>
+     <width>52</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Open Sans</family>
+     <pointsize>-1</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+                                        background-color: #1e1e1e;
+                                        border: 0px;
+                                        color: #d4d4d4;
+                                        font-size: 14px;        
+                                    }</string>
+   </property>
+   <property name="text">
+    <string>Usuario</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lblPassConfirm">
+   <property name="geometry">
+    <rect>
+     <x>17</x>
+     <y>123</y>
+     <width>151</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Open Sans</family>
+     <pointsize>-1</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+                                        background-color: #1e1e1e;
+                                        border: 0px;
+                                        color: #d4d4d4;
+                                        font-size: 14px;        
+                                    }</string>
+   </property>
+   <property name="text">
+    <string>Confirmar Contraseña</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineditPassConfirm">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>120</y>
+     <width>141</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">                                    QLineEdit {
+                                        background-color: #252526;
+                                        border: 1px solid #3c3c3c;
+                                        border-radius: 6px;
+                                        padding: 2px;
+                                        color: #d4d4d4;
+                                        font-size: 12px;
+                                    }
+                                    QLineEdit:focus {
+                                        border: 1px solid #007acc;
+                                    }</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>btnOkCancelar</sender>
+   <signal>accepted()</signal>
+   <receiver>dialogRegister</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnOkCancelar</sender>
+   <signal>rejected()</signal>
+   <receiver>dialogRegister</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
