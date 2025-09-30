@@ -155,6 +155,10 @@ def vender_extranjera(username, cantidad, moneda):
     guardar_cuentas(username, user_cuentas)    
     return True, formatear_monto(conversion)
 
+# Función para crear una nueva cuenta de moneda (wrapper para la capa de datos)
+def crear_cuenta_usuario(username, moneda):
+    return crear_cuenta(username, moneda)
+
 # Función para obtener las monedas con las que se puede operar
 def monedas_disponibles():
     # Llama a la capa de datos para obtener las monedas desde la API
