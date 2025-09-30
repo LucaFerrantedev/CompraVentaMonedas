@@ -1,9 +1,10 @@
-Trabajo asignado por un profesor donde se simula:
+## Funciones 
 
 - Creación de cuentas en diferentes monedas
 - Operaciones de Compra/Venta
 - Operaciones de Deposito
 
+Utiliza PyQt para la interfaz
 Todo se guarda en una base de datos MySQL usando ORM
 
 Utilicé la API de CurrencyFreaks
