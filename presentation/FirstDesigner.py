@@ -221,7 +221,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 QMessageBox.information(self, "Compra Exitosa", f"Has comprado {resultado} {moneda}.")
                 self.actualizar_saldos_y_monedas()
             else:
-                # Mapeo de errores a mensajes amigables
+                # Mensajes de error segun el motivo
                 mensajes_error = {
                     "cantidad_invalida": "La cantidad debe ser un número mayor que cero.",
                     "monto_invalido": "Por favor, ingrese un monto numérico válido.",
