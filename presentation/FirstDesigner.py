@@ -142,6 +142,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         else:
             QMessageBox.information(self, "Cancelado", "La operación fue cancelada.")
     
+    # Lógica del botón Ingresar ARS
     def btnIngresarARSClick(self):
         dialogo = dialogIngresarARS()
         res = dialogo.exec()
