@@ -1,11 +1,14 @@
-from business.business import registrar_usuario, iniciar_sesion, ingresar_ars, crear_cuenta, comprar_extranjera, vender_extranjera, consultar_saldos
-from business.business import password_asteriscos, password_coincide, password_invalida, usuario_invalido
+from business.business import (registrar_usuario, iniciar_sesion, ingresar_ars, comprar_extranjera, 
+                               vender_extranjera, consultar_saldos, password_coincide, password_invalida, usuario_invalido, monedas_disponibles)
+from data.data import crear_cuenta
 from PyQt6.QtWidgets import QApplication,QMainWindow,QPushButton,QLineEdit,QLabel, QTableWidgetItem, QDialog, QMessageBox
 from PyQt6.QtCore import Qt
 import sys
 from presentation.screens.Login_ui import Ui_LoginWindow
 from presentation.screens.Main_ui import Ui_MainWindow
 from presentation.screens.dialogRegister_ui import Ui_dialogRegister
+from presentation.screens.dialogIngresarARS_ui import Ui_dialogIngresarARS
+from presentation.screens.dialogCrearCuenta_ui import Ui_dialogCrearCuenta
 from PyQt6.QtGui import QKeySequence
 
 # Ventana de login (primera ventana que se muestra)
@@ -16,6 +19,7 @@ class LoginWindow(QMainWindow, Ui_LoginWindow):
         self.lineditPass.setEchoMode(QLineEdit.EchoMode.Password)  # ← Oculta con asteriscos
         self.btnRegister.clicked.connect(self.btnRegisterClick)
         self.btnLogin.clicked.connect(self.btnLoginClick)
+        self.username = "" # Para pasar el nombre de usuario a la ventana principal
         self.show()
 
     # Lógica del botón Registrar
@@ -70,7 +74,8 @@ class LoginWindow(QMainWindow, Ui_LoginWindow):
                 return
             if exito:
                 print(QMessageBox.information(self, "Bienvenido", "Inicio de sesión exitoso."))
-                self.main_window = MainWindow()
+                self.username = username
+                self.main_window = MainWindow(self.username)
                 self.main_window.show()
                 self.close()
             else:
@@ -88,16 +93,74 @@ class dialogRegister(QDialog, Ui_dialogRegister):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.lineditPass.setEchoMode(QLineEdit.EchoMode.Password)         # ← Oculta con asteriscos
-        self.lineditPassConfirm.setEchoMode(QLineEdit.EchoMode.Password)  # ← Oculta con asteriscos
+        # Oculta con asteriscos
+        self.lineditPass.setEchoMode(QLineEdit.EchoMode.Password)
+        self.lineditPassConfirm.setEchoMode(QLineEdit.EchoMode.Password)
 
-# Ventana principal (se accede si se logra iniciar sesión)
-class MainWindow(QMainWindow, Ui_MainWindow):
+# Diálogo para ingresar ARS
+class dialogIngresarARS(QDialog, Ui_dialogIngresarARS):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+
+# Diálogo para crear cuenta de moneda
+class dialogCrearCuenta(QDialog, Ui_dialogCrearCuenta):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+        # Obtenemos las monedas desde la capa de negocio
+        monedas = monedas_disponibles()
+        if monedas:
+            self.comboxMoneda.addItems(monedas)
+        else:
+            QMessageBox.warning(self, "Error", "No se pudieron cargar las monedas disponibles.")
+
+# Ventana principal (se accede si se logra iniciar sesión)
+class MainWindow(QMainWindow, Ui_MainWindow):
+    def __init__(self, username):
+        super().__init__()
+        self.setupUi(self)
+        self.username = username
+        self.setWindowTitle(f"Operaciones - {self.username}")
+        self.btnIngresarARS.clicked.connect(self.btnIngresarARSClick)
+        self.btnCrearCuenta.clicked.connect(self.btnCrearCuentaClick)
+
         self.show()
 
+    def btnCrearCuentaClick(self):
+        dialogo = dialogCrearCuenta()
+        res = dialogo.exec()
+
+        if res == QDialog.DialogCode.Accepted:
+            moneda_seleccionada = dialogo.comboxMoneda.currentText()
+            exito = crear_cuenta(self.username, moneda_seleccionada)
+
+            if exito:
+                QMessageBox.information(self, "Éxito", f"Cuenta para {moneda_seleccionada} creada correctamente.")
+            else:
+                QMessageBox.warning(self, "Atención", f"Ya tienes una cuenta para {moneda_seleccionada} o ocurrió un error.")
+        else:
+            QMessageBox.information(self, "Cancelado", "La operación fue cancelada.")
+    
+    def btnIngresarARSClick(self):
+        dialogo = dialogIngresarARS()
+        res = dialogo.exec()
+        
+        if res == QDialog.DialogCode.Accepted:
+            cantidad = dialogo.lineditARS.text()
+            exito, motivo = ingresar_ars(self.username, cantidad)
+            if exito:
+                QMessageBox.information(self, "Éxito", "Ingreso realizado correctamente.")
+            else:
+                mensaje = "No se pudo realizar el ingreso."
+                if motivo == "cantidad_invalida":
+                    mensaje = "La cantidad debe ser un número mayor que cero."
+                elif motivo == "monto_invalido":
+                    mensaje = "Por favor, ingrese un monto numérico válido."
+                QMessageBox.warning(self, "Error", mensaje)
+        else:
+            QMessageBox.information(self, "Cancelado", "La operación fue cancelada.")
+            
 if __name__ == '__main__':
     app = QApplication([])
     ventana = LoginWindow()

@@ -1,6 +1,6 @@
 from decimal import Decimal
 import msvcrt
-from data.data import cargar_users, guardar_user, crear_cuenta, get_conversion_rate, cargar_cuentas, guardar_cuentas, tiene_cuenta_moneda
+from data.data import cargar_users, guardar_user, crear_cuenta, get_conversion_rate, cargar_cuentas, guardar_cuentas, tiene_cuenta_moneda, monedas_api
 import bcrypt # type: ignore
 
 # Registrar un nuevo usuario
@@ -155,9 +155,15 @@ def vender_extranjera(username, cantidad, moneda):
     guardar_cuentas(username, user_cuentas)    
     return True, formatear_monto(conversion)
 
-# Función para crear una nueva cuenta de moneda
-def crear_cuenta_moneda(username, moneda):
-    return crear_cuenta(username, moneda)
+# Función para obtener las monedas con las que se puede operar
+def monedas_disponibles():
+    # Llama a la capa de datos para obtener las monedas desde la API
+    monedas = monedas_api()
+    if monedas:
+        # Se excluye ARS porque ya se crea por defecto y es la moneda base.
+        monedas_filtradas = [m for m in monedas if m != "ARS"]
+        return monedas_filtradas
+    return [] # Devuelve una lista vacía si hubo un error
 
 # Función para verificar si un nombre de usuario ya existe al registrarse
 def username_existente(username, usuarios):
