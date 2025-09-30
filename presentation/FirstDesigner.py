@@ -1,8 +1,9 @@
 from business.business import (registrar_usuario, iniciar_sesion, ingresar_ars, comprar_extranjera, 
-                               vender_extranjera, consultar_saldos, password_coincide, password_invalida, usuario_invalido, monedas_disponibles)
-from data.data import crear_cuenta
-from PyQt6.QtWidgets import QApplication,QMainWindow,QPushButton,QLineEdit,QLabel, QTableWidgetItem, QDialog, QMessageBox
-from PyQt6.QtCore import Qt
+                               vender_extranjera, consultar_saldos, password_coincide, password_invalida, 
+                               usuario_invalido, monedas_disponibles, crear_cuenta_usuario)
+
+from PyQt6.QtWidgets import QApplication,QMainWindow,QPushButton,QLineEdit,QLabel, QTableWidgetItem, QDialog, QMessageBox, QAbstractItemView,QListView
+from PyQt6.QtCore import Qt, QStringListModel, QTimer
 import sys
 from presentation.screens.Login_ui import Ui_LoginWindow
 from presentation.screens.Main_ui import Ui_MainWindow
@@ -16,7 +17,7 @@ class LoginWindow(QMainWindow, Ui_LoginWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.lineditPass.setEchoMode(QLineEdit.EchoMode.Password)  # ← Oculta con asteriscos
+        self.lineditPass.setEchoMode(QLineEdit.EchoMode.Password)  # Oculta con asteriscos
         self.btnRegister.clicked.connect(self.btnRegisterClick)
         self.btnLogin.clicked.connect(self.btnLoginClick)
         self.username = "" # Para pasar el nombre de usuario a la ventana principal
@@ -35,7 +36,6 @@ class LoginWindow(QMainWindow, Ui_LoginWindow):
 
                 if not usuario_invalido(username):
                     print(QMessageBox.critical(self, "Informacion", "Usuario invalido"))
-                    print("\033[31m❌ Usuario invalido.\033[0m")
                     return
                 if not password_invalida(password):
                     print(QMessageBox.critical(self, "Informacion", "La contraseña no puede estar vacía ni contener espacios"))
@@ -124,8 +124,35 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setWindowTitle(f"Operaciones - {self.username}")
         self.btnIngresarARS.clicked.connect(self.btnIngresarARSClick)
         self.btnCrearCuenta.clicked.connect(self.btnCrearCuentaClick)
-
+        self.btnComprar.clicked.connect(self.btnComprarClick)
+        self.btnVender.clicked.connect(self.btnVenderClick)
+        self.listviewMonedas.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers) # Hace que la lista no sea editable
+        self.actualizar_saldos_y_monedas() # Carga inicial de saldos y monedas
         self.show()
+
+    def actualizar_saldos_y_monedas(self):
+        self.actualizar_saldos_listview()
+        self.actualizar_monedas_combobox()
+
+    def actualizar_saldos_listview(self):
+        saldos = consultar_saldos(self.username)
+        if saldos:
+            # Formateamos cada línea para mostrar moneda y saldo
+            items_lista = [f"{moneda}: {saldo}" for moneda, saldo in saldos.items()]
+            # Usamos un QStringListModel para manejar los datos de la lista
+            modelo = QStringListModel(items_lista)
+            self.listviewMonedas.setModel(modelo)
+        else:
+            # Si no hay saldos, limpiamos la lista
+            self.listviewMonedas.setModel(QStringListModel([]))
+
+    def actualizar_monedas_combobox(self):
+        saldos = consultar_saldos(self.username)
+        self.comboxMoneda.clear()
+        if saldos:
+            # Añadimos todas las monedas que no sean ARS al combobox
+            monedas_usuario = [moneda for moneda in saldos.keys() if moneda != "ARS"]
+            self.comboxMoneda.addItems(monedas_usuario)
 
     def btnCrearCuentaClick(self):
         dialogo = dialogCrearCuenta()
@@ -133,10 +160,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         if res == QDialog.DialogCode.Accepted:
             moneda_seleccionada = dialogo.comboxMoneda.currentText()
-            exito = crear_cuenta(self.username, moneda_seleccionada)
+            exito = crear_cuenta_usuario(self.username, moneda_seleccionada)
 
             if exito:
                 QMessageBox.information(self, "Éxito", f"Cuenta para {moneda_seleccionada} creada correctamente.")
+                self.actualizar_saldos_y_monedas() # Actualizamos la UI
             else:
                 QMessageBox.warning(self, "Atención", f"Ya tienes una cuenta para {moneda_seleccionada} o ocurrió un error.")
         else:
@@ -152,6 +180,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             exito, motivo = ingresar_ars(self.username, cantidad)
             if exito:
                 QMessageBox.information(self, "Éxito", "Ingreso realizado correctamente.")
+                self.actualizar_saldos_y_monedas() # Actualizamos la UI
             else:
                 mensaje = "No se pudo realizar el ingreso."
                 if motivo == "cantidad_invalida":
@@ -162,6 +191,90 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         else:
             QMessageBox.information(self, "Cancelado", "La operación fue cancelada.")
             
+    def btnComprarClick(self):
+        moneda = self.comboxMoneda.currentText()
+        cantidad = self.lineditCantidad.text()
+
+        if not moneda:
+            QMessageBox.warning(self, "Atención", "No has seleccionado ninguna moneda para comprar.")
+            return
+
+        # Diálogo de confirmación
+        msg_box = QMessageBox(self)
+        msg_box.setWindowTitle("Confirmar Compra")
+        msg_box.setText(f"¿Confirmas la compra de {moneda} utilizando {cantidad} ARS?")
+        msg_box.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        msg_box.setDefaultButton(QMessageBox.StandardButton.No)
+        
+        # Timer para cancelar automáticamente después de 2 minutos (120000 ms)
+        timer = QTimer(self)
+        timer.setSingleShot(True)
+        timer.timeout.connect(msg_box.reject)
+        timer.start(120000)
+
+        reply = msg_box.exec()
+        timer.stop()
+
+        if reply == QMessageBox.StandardButton.Yes:
+            exito, resultado = comprar_extranjera(self.username, cantidad, moneda)
+            if exito:
+                QMessageBox.information(self, "Compra Exitosa", f"Has comprado {resultado} {moneda}.")
+                self.actualizar_saldos_y_monedas()
+            else:
+                # Mapeo de errores a mensajes amigables
+                mensajes_error = {
+                    "cantidad_invalida": "La cantidad debe ser un número mayor que cero.",
+                    "monto_invalido": "Por favor, ingrese un monto numérico válido.",
+                    "sin_ars": "No tienes una cuenta en ARS para realizar la compra.",
+                    "sin_tasa": "No se pudo obtener la tasa de conversión. Intente más tarde.",
+                    "saldo_insuficiente": "No tienes suficiente saldo en ARS para esta compra.",
+                    "sin_cuenta_moneda": f"No tienes una cuenta de {moneda} para comprar. Créala primero."
+                }
+                mensaje = mensajes_error.get(resultado, "Ocurrió un error inesperado al intentar comprar.")
+                QMessageBox.critical(self, "Error en la Compra", mensaje)
+        else:
+            QMessageBox.information(self, "Operación Cancelada", "La compra ha sido cancelada.")
+
+    def btnVenderClick(self):
+        moneda = self.comboxMoneda.currentText()
+        cantidad = self.lineditCantidad.text()
+
+        if not moneda:
+            QMessageBox.warning(self, "Atención", "No has seleccionado ninguna moneda para vender.")
+            return
+
+        # Diálogo de confirmación
+        msg_box = QMessageBox(self)
+        msg_box.setWindowTitle("Confirmar Venta")
+        msg_box.setText(f"¿Confirmas la venta de {cantidad} {moneda}?")
+        msg_box.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        msg_box.setDefaultButton(QMessageBox.StandardButton.No)
+
+        timer = QTimer(self)
+        timer.setSingleShot(True)
+        timer.timeout.connect(msg_box.reject)
+        timer.start(120000)
+
+        reply = msg_box.exec()
+        timer.stop()
+
+        if reply == QMessageBox.StandardButton.Yes:
+            exito, resultado = vender_extranjera(self.username, cantidad, moneda)
+            if exito:
+                QMessageBox.information(self, "Venta Exitosa", f"Has recibido {resultado} ARS.")
+                self.actualizar_saldos_y_monedas()
+            else:
+                mensajes_error = {
+                    "cantidad_invalida": "La cantidad debe ser un número mayor que cero.",
+                    "monto_invalido": "Por favor, ingrese un monto numérico válido.",
+                    "saldo_insuficiente": f"No tienes suficiente saldo en {moneda} para vender.",
+                    "sin_tasa": "No se pudo obtener la tasa de conversión. Intente más tarde."
+                }
+                mensaje = mensajes_error.get(resultado, "Ocurrió un error inesperado al intentar vender.")
+                QMessageBox.critical(self, "Error en la Venta", mensaje)
+        else:
+            QMessageBox.information(self, "Operación Cancelada", "La venta ha sido cancelada.")
+
 if __name__ == '__main__':
     app = QApplication([])
     ventana = LoginWindow()
