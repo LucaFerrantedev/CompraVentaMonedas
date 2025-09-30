@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QComboBox" name="comboBox">
+   <widget class="QComboBox" name="comboxMoneda">
     <property name="geometry">
      <rect>
       <x>70</x>
@@ -47,7 +47,7 @@
      <string>Moneda</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="lineditCantidad">
     <property name="geometry">
      <rect>
       <x>70</x>
@@ -97,14 +97,14 @@
     <property name="geometry">
      <rect>
       <x>220</x>
-      <y>130</y>
+      <y>70</y>
       <width>107</width>
-      <height>148</height>
+      <height>72</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="btnIngresarARS">
        <property name="styleSheet">
         <string notr="true">QPushButton {
     background-color: #1976D2;
@@ -149,10 +149,19 @@ QPushButton:pressed {
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QPushButton" name="btnComprar">
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
+    </layout>
+   </widget>
+   <widget class="QPushButton" name="btnComprar">
+    <property name="geometry">
+     <rect>
+      <x>221</x>
+      <y>182</y>
+      <width>105</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
     background-color: #19D257;
     color: white;
     border-radius: 8px;
@@ -166,16 +175,22 @@ QPushButton:hover {
 QPushButton:pressed {
     background-color: #41965D;
 }</string>
-       </property>
-       <property name="text">
-        <string>Comprar</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btnVender">
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
+    </property>
+    <property name="text">
+     <string>Comprar</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnVender">
+    <property name="geometry">
+     <rect>
+      <x>221</x>
+      <y>220</y>
+      <width>105</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
     background-color: #D2BC19;
     color: white;
     border-radius: 8px;
@@ -189,13 +204,10 @@ QPushButton:hover {
 QPushButton:pressed {
     background-color: #8A7E41;
 }</string>
-       </property>
-       <property name="text">
-        <string>Vender</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    </property>
+    <property name="text">
+     <string>Vender</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

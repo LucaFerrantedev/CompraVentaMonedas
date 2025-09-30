@@ -97,6 +97,25 @@ def obtener_monedas_usuario(username):
         return []
     return [moneda for moneda in cuentas.keys() if moneda != "username"]
 
+# Obtiene todas las monedas disponibles desde la API
+def monedas_api():
+    """Obtiene todas las monedas disponibles desde la API de CurrencyFreaks."""
+    try:
+        response = requests.get(
+            "https://api.currencyfreaks.com/latest",
+            params={"apikey": os.getenv("API_KEY")}
+        )
+        response.raise_for_status()  # Lanza una excepción para códigos de error HTTP
+        data = response.json()
+        if "rates" in data:
+            return sorted(list(data["rates"].keys())) # Devuelve la lista ordenada
+        else:
+            return None
+    except requests.exceptions.RequestException as e:
+        print(f"Error al contactar la API de monedas: {e}")
+        return None
+
+
 # Usa la API de CurrencyFreaks con la apikey
 def get_conversion_rate(base: str, target: str) -> Decimal | None:
     try:

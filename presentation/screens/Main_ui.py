@@ -15,9 +15,9 @@ class Ui_MainWindow(object):
         MainWindow.resize(641, 442)
         self.centralwidget = QtWidgets.QWidget(parent=MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.comboBox = QtWidgets.QComboBox(parent=self.centralwidget)
-        self.comboBox.setGeometry(QtCore.QRect(70, 170, 111, 31))
-        self.comboBox.setStyleSheet("                                    QComboBox {\n"
+        self.comboxMoneda = QtWidgets.QComboBox(parent=self.centralwidget)
+        self.comboxMoneda.setGeometry(QtCore.QRect(70, 170, 111, 31))
+        self.comboxMoneda.setStyleSheet("                                    QComboBox {\n"
 "                                        background-color: #252526;\n"
 "                                        border: 1px solid #3c3c3c;\n"
 "                                        border-radius: 6px;\n"
@@ -25,13 +25,13 @@ class Ui_MainWindow(object):
 "                                        color: #d4d4d4;\n"
 "                                        font-size: 14px;\n"
 "                                    }")
-        self.comboBox.setObjectName("comboBox")
+        self.comboxMoneda.setObjectName("comboxMoneda")
         self.lblMoneda = QtWidgets.QLabel(parent=self.centralwidget)
         self.lblMoneda.setGeometry(QtCore.QRect(70, 150, 49, 16))
         self.lblMoneda.setObjectName("lblMoneda")
-        self.lineEdit = QtWidgets.QLineEdit(parent=self.centralwidget)
-        self.lineEdit.setGeometry(QtCore.QRect(70, 230, 111, 31))
-        self.lineEdit.setStyleSheet("                                    QLineEdit {\n"
+        self.lineditCantidad = QtWidgets.QLineEdit(parent=self.centralwidget)
+        self.lineditCantidad.setGeometry(QtCore.QRect(70, 230, 111, 31))
+        self.lineditCantidad.setStyleSheet("                                    QLineEdit {\n"
 "                                        background-color: #252526;\n"
 "                                        border: 1px solid #3c3c3c;\n"
 "                                        border-radius: 6px;\n"
@@ -42,7 +42,7 @@ class Ui_MainWindow(object):
 "                                    QLineEdit:focus {\n"
 "                                        border: 1px solid #007acc;\n"
 "                                    }")
-        self.lineEdit.setObjectName("lineEdit")
+        self.lineditCantidad.setObjectName("lineditCantidad")
         self.label = QtWidgets.QLabel(parent=self.centralwidget)
         self.label.setGeometry(QtCore.QRect(70, 210, 49, 16))
         self.label.setObjectName("label")
@@ -50,13 +50,13 @@ class Ui_MainWindow(object):
         self.listView.setGeometry(QtCore.QRect(350, 71, 256, 281))
         self.listView.setObjectName("listView")
         self.widget = QtWidgets.QWidget(parent=self.centralwidget)
-        self.widget.setGeometry(QtCore.QRect(220, 130, 107, 148))
+        self.widget.setGeometry(QtCore.QRect(220, 70, 107, 72))
         self.widget.setObjectName("widget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.widget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.pushButton = QtWidgets.QPushButton(parent=self.widget)
-        self.pushButton.setStyleSheet("QPushButton {\n"
+        self.btnIngresarARS = QtWidgets.QPushButton(parent=self.widget)
+        self.btnIngresarARS.setStyleSheet("QPushButton {\n"
 "    background-color: #1976D2;\n"
 "    color: white;\n"
 "    border-radius: 8px;\n"
@@ -70,8 +70,8 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: #0D47A1;\n"
 "}")
-        self.pushButton.setObjectName("pushButton")
-        self.verticalLayout.addWidget(self.pushButton)
+        self.btnIngresarARS.setObjectName("btnIngresarARS")
+        self.verticalLayout.addWidget(self.btnIngresarARS)
         self.btnCrearCuenta = QtWidgets.QPushButton(parent=self.widget)
         self.btnCrearCuenta.setStyleSheet("QPushButton {\n"
 "    background-color: #19D2B0;\n"
@@ -89,7 +89,8 @@ class Ui_MainWindow(object):
 "}")
         self.btnCrearCuenta.setObjectName("btnCrearCuenta")
         self.verticalLayout.addWidget(self.btnCrearCuenta)
-        self.btnComprar = QtWidgets.QPushButton(parent=self.widget)
+        self.btnComprar = QtWidgets.QPushButton(parent=self.centralwidget)
+        self.btnComprar.setGeometry(QtCore.QRect(221, 182, 105, 32))
         self.btnComprar.setStyleSheet("QPushButton {\n"
 "    background-color: #19D257;\n"
 "    color: white;\n"
@@ -105,8 +106,8 @@ class Ui_MainWindow(object):
 "    background-color: #41965D;\n"
 "}")
         self.btnComprar.setObjectName("btnComprar")
-        self.verticalLayout.addWidget(self.btnComprar)
-        self.btnVender = QtWidgets.QPushButton(parent=self.widget)
+        self.btnVender = QtWidgets.QPushButton(parent=self.centralwidget)
+        self.btnVender.setGeometry(QtCore.QRect(221, 220, 105, 32))
         self.btnVender.setStyleSheet("QPushButton {\n"
 "    background-color: #D2BC19;\n"
 "    color: white;\n"
@@ -122,7 +123,6 @@ class Ui_MainWindow(object):
 "    background-color: #8A7E41;\n"
 "}")
         self.btnVender.setObjectName("btnVender")
-        self.verticalLayout.addWidget(self.btnVender)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(parent=MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 641, 22))
@@ -147,7 +147,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.lblMoneda.setText(_translate("MainWindow", "Moneda"))
         self.label.setText(_translate("MainWindow", "Cantidad"))
-        self.pushButton.setText(_translate("MainWindow", "Ingresar ARS"))
+        self.btnIngresarARS.setText(_translate("MainWindow", "Ingresar ARS"))
         self.btnCrearCuenta.setText(_translate("MainWindow", "Crear Cuenta"))
         self.btnComprar.setText(_translate("MainWindow", "Comprar"))
         self.btnVender.setText(_translate("MainWindow", "Vender"))
